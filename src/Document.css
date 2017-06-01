@@ -1,0 +1,36 @@
+.document{
+	margin : 15px 0;
+	padding : 20px 15px;
+	background-color: white;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.15);
+}
+
+ul.document-list{
+	margin: 15px 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+}
+ul.document-list > lh,
+ul.document-list > li {
+	margin: 0 10px;	
+}
+ul.document-list > lh {
+	width : 100px;
+	text-align: right;
+}
+ul.document-list > li > .document-title {
+	margin-bottom : 15px;
+	color: white;
+}
+ul.document-list > li > .document-thumbnail {
+	width: 150px;
+	height : 200px;
+	background-color: white;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.15);
+	text-align: center;
+	line-height: 200px;
+}

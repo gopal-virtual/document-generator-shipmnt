@@ -1,0 +1,31 @@
+{
+	"1" : {
+		"type" : "text",
+		"value" : ""
+	},
+	"2" : {
+		"type" : "text",
+		"value" : ""
+	},
+	"3" : {
+		"type" : "date",
+		"value" : ""
+	},
+	"4" : {
+		"type" : "table",
+		"value" : ""
+	},
+	"5" : {
+		"type" : "textarea",
+		"value" : ""
+	},
+	"6" : {
+		"type" : "img",
+		"value" : ""
+	},
+	"7" : {
+		"type" : "canvas",
+		"value" : ""
+	},
+
+}
