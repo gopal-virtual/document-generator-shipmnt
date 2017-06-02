@@ -1,8 +1,21 @@
+.action-header{
+	height : 10vh;
+	box-sizing: border-box;
+	padding: 0 20px 0 10px;
+	line-height: 10vh;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.15)
+}
+.document-wrapper{
+	height : 90vh;
+	overflow-y : scroll;
+	padding:25px;
+}
 .document{
 	margin : 15px 0;
-	padding : 20px 15px;
+	padding : 40px;
 	background-color: white;
 	box-shadow: 0 2px 2px rgba(0,0,0,0.15);
+    transform-origin: 0 0;
 }
 
 ul.document-list{
@@ -33,4 +46,9 @@ ul.document-list > li > .document-thumbnail {
 	box-shadow: 0 2px 2px rgba(0,0,0,0.15);
 	text-align: center;
 	line-height: 200px;
+}
+ul.document-list > li > .document-thumbnail:hover {
+	transform: translate(0,-2px);
+	box-shadow: 0 4px 2px rgba(0,0,0,0.25);
+	cursor: pointer;
 }
