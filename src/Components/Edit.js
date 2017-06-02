@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Wizard from '../Components/Wizard'
 import Preview from '../Components/Preview'
 
-import 'bootstrap/dist/css/bootstrap.css';
-import '../Style/Bootstrap.custom.css';
-
 class Edit extends Component {
   constructor(){
     super()
@@ -131,19 +128,21 @@ class Edit extends Component {
         {
           !this.state.preview
           ? (
-              <div>
+              <div className="row">
                 <div className="col-xs-12 col-sm-12 col-md-6 col-lg-7 bg-grey height-100">
                   <Wizard data={this.state} onClick={(step)=>{this.changeStep(step)}}></Wizard>
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-5 bg-light-grey">
+                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-5 bg-light-grey height-100">
                   <Preview data={this.state} onClick={()=>{this.togglePreview()}}></Preview>
                 </div>
               </div>
           )
           : (
-            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-light-grey">
-              <Preview data={this.state} onClick={()=>{this.togglePreview()}}></Preview>
-            </div>
+              <div className="row">
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-light-grey height-100">
+                  <Preview data={this.state} onClick={()=>{this.togglePreview()}}></Preview>
+                </div>
+              </div>
           )
         }
       </div>

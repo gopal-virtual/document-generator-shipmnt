@@ -4,7 +4,6 @@
 .bg-light-grey {
   background-color: #DCDCDC;
 }
-
 .fg-light-grey {
 	color : #BABABA;
 }
@@ -14,7 +13,12 @@
 .width-100{
   width : 100vw;
 }
-
+.overflow-hide{
+	overflow : hidden;
+}
+.overflow-y-scroll{
+	overflow-y : scroll;
+}
 .no-padding{
 	padding: 0;
 }
@@ -39,18 +43,10 @@
 .inline-block{
 	display: inline-block;
 }
-::-webkit-scrollbar
-{
-  width: 10px;  /* for vertical scrollbars */
-  height: 10px; /* for horizontal scrollbars */
-}
 
-::-webkit-scrollbar-track
-{
-  background: rgba(0, 0, 0, 0.1);
-}
-
-::-webkit-scrollbar-thumb
-{
-  background: rgba(0, 0, 0, 0.5);
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  overflow : hidden;
 }

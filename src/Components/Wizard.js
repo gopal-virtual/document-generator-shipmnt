@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import '../Style/Progress.css';
-import '../Style/Modal.css';
 
 class Wizard extends Component {
   render() {

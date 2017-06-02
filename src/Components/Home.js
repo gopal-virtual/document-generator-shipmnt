@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import '../Style/Bootstrap.custom.css';
-import '../Style/Common.css';
-
 class Home extends Component {
   render() {
     return (
