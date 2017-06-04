@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-
 import Home from './Components/Home'
 import Edit from './Components/Edit'
 
@@ -12,8 +11,8 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/edit" component={Edit}/>
+          <Route exact path="/" component={() => (<Home state={this.props.state}/>)}/>
+          <Route exact path="/edit/:id" component={({match}) => (<Edit state={this.props.state} match={match}/>)}/>
         </div>
       </Router>
     );

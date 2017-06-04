@@ -3,13 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "bootstrap": "^3.3.7",
+    "expect": "^1.20.2",
+    "history": "^4.6.1",
+    "jquery": "^3.2.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "deep-freeze": "0.0.1",
+    "mocha": "^3.4.2",
     "node-sass-chokidar": "0.0.2",
     "npm-run-all": "^4.0.2",
     "react-scripts": "0.9.x"

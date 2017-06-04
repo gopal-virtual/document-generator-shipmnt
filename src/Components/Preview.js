@@ -9,7 +9,7 @@ class Preview extends Component {
           preview={this.props.data.preview}>
           </ActionHeader>
         <Document 
-          currentStep={this.props.data.currentStep} 
+          currentStep={this.props.data.meta.currentStep} 
           data={this.props.data.data}
           preview={this.props.data.preview}
           width={this.props.data.meta.width} 

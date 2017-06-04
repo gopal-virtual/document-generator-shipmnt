@@ -6,8 +6,12 @@ class Wizard extends Component {
       <div>
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
-            <Progress data={{steps : Object.keys(this.props.data.data), currentStep : this.props.data.currentStep}}></Progress>
-            <Modal currentModule={this.props.data.data[this.props.data.currentStep]} onClick={this.props.onClick}></Modal>
+            <Progress data={{steps : Object.keys(this.props.data.data), currentStep : this.props.data.meta.currentStep}}></Progress>
+            <Modal 
+              currentModule={this.props.data.data[this.props.data.meta.currentStep]}
+              back={this.props.back}
+              next={this.props.next}
+            ></Modal>
           </div>
         </div>
         <Status></Status>
@@ -45,8 +49,8 @@ class Modal extends Component {
             {this.props.currentModule.value}
           </div>
           <div className="panel-footer">
-            <button className="btn btn-default pull-left" onClick={()=>{this.props.onClick(-1)}}>Back</button>
-            <button className="btn btn-default pull-right" onClick={()=>{this.props.onClick(1)}}>Next</button>
+            <button className="btn btn-default pull-left" onClick={this.props.back}>Back</button>
+            <button className="btn btn-default pull-right" onClick={this.props.next}>Next</button>
             <div className="clearfix"></div>
           </div>
         </div>
