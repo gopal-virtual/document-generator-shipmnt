@@ -8,7 +8,7 @@ class Preview extends Component {
         <PrintDocument 
           currentStep={this.props.data.meta.currentStep} 
           data={this.props.data.data}
-          preview={this.props.data.preview}
+          preview={this.props.preview}
           width={this.props.data.meta.width} 
           height={this.props.data.meta.height}
           ></PrintDocument>
@@ -16,12 +16,12 @@ class Preview extends Component {
         <div className="hidden-print">
           <ActionHeader 
             onClick={this.props.onClick}
-            preview={this.props.data.preview}>
+            preview={this.props.preview}>
             </ActionHeader>
           <Document 
             currentStep={this.props.data.meta.currentStep} 
             data={this.props.data.data}
-            preview={this.props.data.preview}
+            preview={this.props.preview}
             width={this.props.data.meta.width} 
             height={this.props.data.meta.height}
             ></Document>
@@ -42,8 +42,7 @@ class ActionHeader extends Component {
           }>
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-left">
               <span onClick={this.props.onClick}>
-                <i className="glyphicon glyphicon-fullscreen"></i> 
-                Preview
+                <i className="glyphicon glyphicon-fullscreen"></i> Preview
               </span>
             </div>
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 center">
@@ -82,7 +81,7 @@ class Document extends Component {
             ? 'col-xs-8 col-sm-8 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 document-wrapper'
             : 'col-xs-8 col-sm-8 col-md-12 col-lg-12 document-wrapper'
           }>
-            <div className="document">
+            <div className="document animation-fade-in">
               <Template
                 currentStep={this.props.currentStep} 
                 data={this.props.data}

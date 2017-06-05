@@ -50,13 +50,15 @@ class Edit extends Component {
         valid : validStatus
       })
   }
-  goBack(widgetId, content){ 
+  goBack(widgetId, content){
     Store.dispatch(updateDocument(widgetId, content))
     Store.dispatch(goBack())
+    this.save()
   }
   goNext(widgetId, content){
     Store.dispatch(updateDocument(widgetId, content))
     Store.dispatch(goNext())
+    this.save()
   }
   render() {
     const preview = this.state.data.Document.meta 
@@ -73,8 +75,8 @@ class Edit extends Component {
              />
            </div>
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-5 bg-light-grey height-100">
-            <button onClick={this.save.bind(this)}>save</button>
              <Preview 
+              preview={this.state.preview}
               data={this.state.data.Document} 
               onClick={this.togglePreview.bind(this)}/>
            </div>
@@ -84,6 +86,7 @@ class Edit extends Component {
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-light-grey height-100">
             <Preview 
+              preview={this.state.preview}
               data={this.state.data.Document}
               onClick={this.togglePreview.bind(this)}/>
           </div>

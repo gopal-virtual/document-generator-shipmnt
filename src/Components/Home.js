@@ -62,7 +62,7 @@ const DocumentList = (props) =>
         props.list
           .map((doc)=>{
             return (
-              <li key={doc.id}>
+              <li key={doc.id} className="animation-fade-in-from-bottom">
                 <div className="document-title">{doc.name}</div>
                 <div className="document-thumbnail" onClick={()=>{ props.onClick(props.type, doc.id) }}>Edit</div>
               </li>

@@ -76,7 +76,7 @@ class Modal extends Component {
   render(){
     return (
       <div className="modal-wrapper">
-        <div className="panel">
+        <div className="panel animation-fade-in-from-bottom">
           <div className="panel-heading">
             <div className="panel-title">{this.props.content.desc}</div>
           </div>

@@ -155,3 +155,28 @@ textarea.noResize {
     top: 0;
     left: 0;
     z-index: 1000; } }
+
+.animation-fade-in-from-bottom,
+.animation-fade-in {
+  -webkit-animation-fill-mode: backwards;
+  -webkit-animation-duration: 300ms; }
+
+.animation-fade-in-from-bottom {
+  -webkit-animation-name: fade-in-from-bottom; }
+
+.animation-fade-in {
+  -webkit-animation-name: fade-in; }
+
+@keyframes fade-in-from-bottom {
+  0% {
+    -webkit-transform: translate3d(0, 20px, 0);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1; } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
