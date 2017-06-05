@@ -34,21 +34,21 @@ class ActionHeader extends Component {
   render(){
     return (
       <div className="row">
-        <div className="action-header">
+        <div className="action-header bg-black">
           <div className={
             this.props.preview
             ? 'col-xs-8 col-sm-8 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2'
             : 'col-xs-8 col-sm-8 col-md-12 col-lg-12'
           }>
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-left">
-              <span onClick={this.props.onClick}>
+              <span onClick={this.props.onClick} className="fg-light-grey animation-fade-in">
                 <i className="glyphicon glyphicon-fullscreen"></i> Preview
               </span>
             </div>
-            <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 center">
-              <span>Document Title</span>
+            <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 center animation-fade-in">
+              <span className="fg-light-grey">Document Title</span>
             </div>
-            <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+            <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right animation-fade-in">
               <button className="btn btn-default">Download</button>
             </div>
           </div>

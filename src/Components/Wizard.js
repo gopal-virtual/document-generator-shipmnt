@@ -22,11 +22,11 @@ const Wizard = (props) =>
   </div>
 
 const Progress = (props) =>
-  <div className="progress-wrapper">
+  <div className="progress-wrapper animation-fade-in">
     <div className="progress-number">
       <div className="progress" style={{width: '100%'}}>
         <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow={props.percent} aria-valuemin="0" aria-valuemax="100" style={{minWidth : `${props.percent}%`}}>
-          {props.currentStep} / {props.steps}
+          <strong>{props.currentStep} / {props.steps}</strong>
         </div>
       </div>
     </div>
@@ -50,6 +50,7 @@ class Modal extends Component {
                   ref={input=> this.input = input}
                   autoFocus 
                   className="form-control vertical"
+                  rows="10"
                   type="text"
                   value={widget.value}
                   onChange={onChangeHandler}/>
@@ -78,7 +79,7 @@ class Modal extends Component {
       <div className="modal-wrapper">
         <div className="panel animation-fade-in-from-bottom">
           <div className="panel-heading">
-            <div className="panel-title">{this.props.content.desc}</div>
+            <div className="panel-title"><strong>{this.props.content.desc}</strong></div>
           </div>
           <div className="panel-body">
             <div className="form-group">
@@ -119,6 +120,6 @@ class Modal extends Component {
   }
 }
 
-const Status = () => <div className="footer center">...Auto Saved</div>
+const Status = () => <div className="footer center fg-light-blue">...Auto Saved</div>
       
 export default Wizard;

@@ -65,7 +65,7 @@ class Edit extends Component {
     ? !this.state.preview 
     ? ( 
         <div className="row">
-           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-7 bg-grey height-100">
+           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-7 bg-blue height-100">
              <Wizard 
              valid={this.state.valid}
              document={this.state.data.Document} 

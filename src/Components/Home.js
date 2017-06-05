@@ -29,8 +29,8 @@ class Home extends Component {
         { !State.Document.meta 
           ? (
               <div className="container-fluid">
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-grey height-100">
-                  <h5 className="text-center margin-tb-15 fg-light-grey">Select a document to start</h5>
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-blue height-100">
+                  <h5 className="text-center margin-tb-15 fg-light-blue"><strong>Select a document to start</strong></h5>
                   <div className="row">
                     <div className="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
                       {
@@ -57,14 +57,14 @@ class Home extends Component {
 const DocumentList = (props) =>
   <div>
     <ul className="document-list">
-      <lh>{props.type}</lh>
+      <lh className="fg-light-blue">{props.type}</lh>
       {
         props.list
           .map((doc)=>{
             return (
               <li key={doc.id} className="animation-fade-in-from-bottom">
                 <div className="document-title">{doc.name}</div>
-                <div className="document-thumbnail" onClick={()=>{ props.onClick(props.type, doc.id) }}>Edit</div>
+                <div className="document-thumbnail fg-blue" onClick={()=>{ props.onClick(props.type, doc.id) }}>Edit</div>
               </li>
             )    
           })
