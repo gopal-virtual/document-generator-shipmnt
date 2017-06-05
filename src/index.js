@@ -1,14 +1,14 @@
 import 'babel-polyfill'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppRouter from './App';
+import App from './App';
 import { fetchDocumentList } from './Redux/Reducer/Actions'
 import Store from './Redux/App.store';
 import './Style/index.css';
 
 const render = ()=>{
 	ReactDOM.render(
-	  <AppRouter state={Store.getState()}/>,
+	  <App state={Store.getState()}/>,
 	  document.getElementById('root')
 	);
 }

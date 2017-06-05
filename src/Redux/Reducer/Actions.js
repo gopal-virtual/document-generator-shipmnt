@@ -59,6 +59,16 @@ function receiveDocument(json, id) {
   }
 }
 
+export const UPDATE_DOCUMENT = 'UPDATE_DOCUMENT'
+export function updateDocument(widgetId, content) {
+  return {
+    type: UPDATE_DOCUMENT,
+    widgetId: widgetId,
+    content : content
+  }
+}
+
+
 export function fetchDocumentList() {
 
   return function (dispatch) {
@@ -82,8 +92,9 @@ export function fetchDocument(id) {
 
     return fetch(`http://localhost:9000/get/doc?id=${id}`)
       .then(response => response.json())
-      .then(json =>
-        dispatch(receiveDocument(json, id))
+      .then(json => {
+          dispatch(receiveDocument(json, id))
+        }
       )
       .catch(error => console.log(error))
   }

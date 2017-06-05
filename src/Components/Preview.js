@@ -77,7 +77,7 @@ class Document extends Component {
                       <Widget data={{step : 2, currentStep : this.props.currentStep, data : this.props.data[2]}}/><br/>
                       Tel : <Widget data={{step : 3, currentStep : this.props.currentStep, data : this.props.data[3]}}/>,
                       Fax : <Widget data={{step : 4, currentStep : this.props.currentStep, data : this.props.data[4]}}/><br/>
-                      Website : <Widget data={{step : 5, currentStep : this.props.currentStep, data : this.props.data[5]}}/>
+                      Email : <Widget data={{step : 5, currentStep : this.props.currentStep, data : this.props.data[5]}}/>
                     </small>
                   </h4>
                   <div>

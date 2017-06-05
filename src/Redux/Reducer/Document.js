@@ -1,7 +1,6 @@
-import { RECEIVE_DOCUMENT, GO_BACK, GO_NEXT } from '../../Redux/Reducer/Actions'
+import { RECEIVE_DOCUMENT, GO_BACK, GO_NEXT, UPDATE_DOCUMENT } from '../../Redux/Reducer/Actions'
 
 const Document = (state = {}, action) => {
-	console.log(action)
 	switch(action.type){
 		case RECEIVE_DOCUMENT:
 			return Object.assign({}, state, action.data, { 
@@ -14,6 +13,14 @@ const Document = (state = {}, action) => {
 		case GO_BACK:
 			return Object.assign({}, state, {
 				meta : Object.assign({}, state.meta, { currentStep : Math.max(state.meta.currentStep - 1, 1)})
+			});
+		case UPDATE_DOCUMENT :
+			return Object.assign({}, state, {
+				data : Object.assign({}, state.data, {
+					[action.widgetId] : Object.assign({}, state.data[action.widgetId], {
+						value : action.content
+					})
+				})
 			});
 		default :
 			return Object.assign({}, state);

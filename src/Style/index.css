@@ -134,3 +134,15 @@ ul.document-list > li > .document-thumbnail:hover {
 .highlight-widget {
   background-color: rgba(155, 155, 255, 0.2);
   border: 2px solid #9b9bff; }
+
+textarea {
+  resize: both; }
+
+textarea.vertical {
+  resize: vertical; }
+
+textarea.horizontal {
+  resize: horizontal; }
+
+textarea.noResize {
+  resize: none; }
