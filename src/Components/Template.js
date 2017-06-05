@@ -6,7 +6,8 @@ class Template extends Component{
       <div className="row">
         <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <h4>
-            <Widget data={{step : 1, currentStep : this.props.currentStep, data : this.props.data[1]}}/><br/>
+            <Widget 
+              data={{step : 1, currentStep : this.props.currentStep, data : this.props.data[1]}}/><br/>
             <small>
               <Widget data={{step : 2, currentStep : this.props.currentStep, data : this.props.data[2]}}/><br/>
               Tel : <Widget data={{step : 3, currentStep : this.props.currentStep, data : this.props.data[3]}}/>,

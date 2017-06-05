@@ -7,12 +7,17 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'build')));
 
+app.get('/', Home);
+app.get('/get/meta', getMeta)
+app.get('/get/doc', getDoc)
+app.patch('/patch/doc', patchDoc)
+app.post('/create/doc', createDoc)
 
-app.get('/', function (req, res) {
+function Home (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+}
 
-app.get('/get/meta', function (req, res) {
+function getMeta(req, res) {
     fs.readFile('src/data/data.json', 'utf8', function(err, data) {
         if (!err) {
             data = { 
@@ -30,9 +35,9 @@ app.get('/get/meta', function (req, res) {
             return res.end("File read error" + err)
         }
     });
-})
+}
 
-app.get('/get/doc', function(req, res) {
+function getDoc(req, res) {
   fs.readFile('src/data/data.json', 'utf8', function(err, data) {
       if (!err) {
           data = JSON.parse(data).docs[req.query.id]
@@ -55,9 +60,9 @@ app.get('/get/doc', function(req, res) {
           return res.end("File read error" + err)
       }
   });  
-})
+}
 
-app.patch('/patch/doc', function(req, res) {
+function patchDoc(req, res) {
     var reqData = '';
 
     req.on('data', function(streamData) {
@@ -98,9 +103,9 @@ app.patch('/patch/doc', function(req, res) {
             }
         });
     })
-})
+}
 
-app.post('/create/doc', function(req, res) {
+function createDoc(req, res) {
     var reqData = '';
 
     req.on('data', function(streamData) {
@@ -147,8 +152,6 @@ app.post('/create/doc', function(req, res) {
             }
         });
     })
-})
-
-
+}
 
 app.listen(9000);

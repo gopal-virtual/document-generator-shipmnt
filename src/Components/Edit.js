@@ -17,6 +17,16 @@ class Edit extends Component {
       }
     }
   }
+  componentDidMount(){
+    this.unsubscribe = Store.subscribe(()=>{
+      this.setState({
+        data : Store.getState()
+      })
+    })
+  }
+  componentWillUnmount(){
+    this.unsubscribe()
+  }
   togglePreview(){
     this.setState({
       preview : !this.state.preview
@@ -40,36 +50,42 @@ class Edit extends Component {
         valid : validStatus
       })
   }
+  goBack(widgetId, content){ 
+    Store.dispatch(updateDocument(widgetId, content))
+    Store.dispatch(goBack())
+  }
+  goNext(widgetId, content){
+    Store.dispatch(updateDocument(widgetId, content))
+    Store.dispatch(goNext())
+  }
   render() {
     const preview = this.state.data.Document.meta 
-    ?  !this.state.preview 
+    ? !this.state.preview 
     ? ( 
         <div className="row">
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-7 bg-grey height-100">
              <Wizard 
              valid={this.state.valid}
-             data={this.state.data.Document} 
-             back={(widgetId, content)=>{ 
-                Store.dispatch(updateDocument(widgetId, content))
-                Store.dispatch(goBack())
-              }}
-             next={(widgetId, content)=>{
-                Store.dispatch(updateDocument(widgetId, content))
-                Store.dispatch(goNext())
-              }}
-             update={(id, widget, content)=>{ this.update(id, widget, content)}}
-             ></Wizard>
+             document={this.state.data.Document} 
+             back={this.goBack.bind(this)}
+             next={this.goNext.bind(this)}
+             update={this.update.bind(this)}
+             />
            </div>
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-5 bg-light-grey height-100">
-            <button onClick={this.save}>save</button>
-             <Preview data={this.state.data.Document} onClick={()=>{this.togglePreview()}}></Preview>
+            <button onClick={this.save.bind(this)}>save</button>
+             <Preview 
+              data={this.state.data.Document} 
+              onClick={this.togglePreview.bind(this)}/>
            </div>
          </div>
        )
     : (
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-light-grey height-100">
-            <Preview data={this.state.data.Document} onClick={()=>{this.togglePreview()}}></Preview>
+            <Preview 
+              data={this.state.data.Document}
+              onClick={this.togglePreview.bind(this)}/>
           </div>
         </div>
       )

@@ -12,6 +12,7 @@ class Preview extends Component {
           width={this.props.data.meta.width} 
           height={this.props.data.meta.height}
           ></PrintDocument>
+          
         <div className="hidden-print">
           <ActionHeader 
             onClick={this.props.onClick}
@@ -40,7 +41,10 @@ class ActionHeader extends Component {
             : 'col-xs-8 col-sm-8 col-md-12 col-lg-12'
           }>
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-left">
-              <span onClick={this.props.onClick}><i className="glyphicon glyphicon-fullscreen"></i> Preview</span>
+              <span onClick={this.props.onClick}>
+                <i className="glyphicon glyphicon-fullscreen"></i> 
+                Preview
+              </span>
             </div>
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 center">
               <span>Document Title</span>
@@ -68,6 +72,7 @@ class Document extends Component {
     elem.style.height = `${this.props.height}px`
     elem.style.transform = `scale(${factor},${factor})`
   }
+
   render(){
     return (
       <div className="row">
@@ -101,7 +106,5 @@ class PrintDocument extends Component {
     );
   }
 }
-
-
 
 export default Preview;
