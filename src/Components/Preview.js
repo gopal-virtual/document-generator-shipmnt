@@ -79,7 +79,7 @@ class Document extends Component {
           }>
             <div className="document">
               <Template
-                currentStep={this.props.preview ? false : this.props.currentStep} 
+                currentStep={this.props.currentStep} 
                 data={this.props.data}
               ></Template>
             </div>

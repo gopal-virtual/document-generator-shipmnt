@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
-import { fetchDocument } from '../Redux/Reducer/Actions'
+import { fetchDocument, createDocument } from '../Redux/Reducer/Actions'
 import Store from '../Redux/App.store';
 
 class Home extends Component {
@@ -43,11 +43,11 @@ class DocumentList extends Component {
           <lh>{this.props.type}</lh>
           {
             this.props.list
-              .map((id)=>{
+              .map((doc)=>{
                 return (
-                  <li key={id}>
-                    <div className="document-title">{id}</div>
-                    <Thumbnail docId={id}></Thumbnail>
+                  <li key={doc.id}>
+                    <div className="document-title">{doc.name}</div>
+                    <Thumbnail docId={doc.id} type={this.props.type}></Thumbnail>
                   </li>
                 )    
               })
@@ -58,9 +58,14 @@ class DocumentList extends Component {
   }
 }
 
-const Thumbnail = ({ docId }) => 
+const Thumbnail = ({ docId, type }) => 
   <div className="document-thumbnail" onClick={()=>{ 
-    Store.dispatch(fetchDocument(docId))
+    if(type === 'Templates'){
+      Store.dispatch(createDocument(docId))
+    }
+    else{
+      Store.dispatch(fetchDocument(docId))
+    }
   }}>Edit</div>
 
 

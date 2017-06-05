@@ -1,4 +1,6 @@
 import fetch from 'isomorphic-fetch'
+import Store from '../App.store'
+import $ from 'jquery'
 
 export const GO_BACK = 'GO_BACK'
 export function goBack() {
@@ -54,8 +56,7 @@ export const RECEIVE_DOCUMENT = 'RECEIVE_DOCUMENT'
 function receiveDocument(json, id) {
   return {
     type: RECEIVE_DOCUMENT,
-    data: json,
-    id : id
+    data: json
   }
 }
 
@@ -65,6 +66,12 @@ export function updateDocument(widgetId, content) {
     type: UPDATE_DOCUMENT,
     widgetId: widgetId,
     content : content
+  }
+}
+export const DOCUMENT_PATCHED = 'DOCUMENT_PATCHED'
+export function documentPatched() {
+  return {
+    type: DOCUMENT_PATCHED
   }
 }
 
@@ -93,9 +100,63 @@ export function fetchDocument(id) {
     return fetch(`http://localhost:9000/get/doc?id=${id}`)
       .then(response => response.json())
       .then(json => {
-          dispatch(receiveDocument(json, id))
+          dispatch(receiveDocument(json))
         }
       )
       .catch(error => console.log(error))
+  }
+}
+
+export function patchDocument(id) {
+
+  return function (dispatch) {
+    let doc = Store.getState().Document
+    let settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://localhost:9000/patch/doc",
+      "method": "PATCH",
+      "headers": {
+        "content-type": "application/json",
+      },
+      "processData": false,
+      "data": JSON.stringify({
+        id : doc.meta.id,
+        data : doc
+      })
+    }
+
+    $.ajax(settings)
+    .done(function (response) {
+      dispatch(documentPatched(response))
+    })
+    .fail(function(status) {
+        console.log(status)
+    })
+  }
+}
+
+export function createDocument(id) {
+
+  return function (dispatch) {
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://localhost:9000/create/doc",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json",
+      },
+      "processData": false,
+      "data": JSON.stringify({ id : id })
+    }
+
+    $.ajax(settings)
+    .done(function (response) {
+      dispatch(receiveDocument(response))
+    })
+    .fail(function(status) {
+        console.log(status)
+    })
   }
 }

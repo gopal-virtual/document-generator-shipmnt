@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import Wizard from '../Components/Wizard'
 import Preview from '../Components/Preview'
-import { goBack, goNext, updateDocument } from '../Redux/Reducer/Actions'
+import { goBack, goNext, updateDocument, patchDocument } from '../Redux/Reducer/Actions'
 import Store from '../Redux/App.store.js'
 import Validate from '../Components/Validate'
 
@@ -21,6 +21,9 @@ class Edit extends Component {
     this.setState({
       preview : !this.state.preview
     })
+  }
+  save(){
+    Store.dispatch(patchDocument())
   }
   update(id, widget, content){
     let state = Object.assign({}, this.state),
@@ -58,6 +61,7 @@ class Edit extends Component {
              ></Wizard>
            </div>
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-5 bg-light-grey height-100">
+            <button onClick={this.save}>save</button>
              <Preview data={this.state.data.Document} onClick={()=>{this.togglePreview()}}></Preview>
            </div>
          </div>
