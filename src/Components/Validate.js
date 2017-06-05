@@ -20,17 +20,17 @@ class Validate {
 				if( config.condition.maxLength && config.value.length > config.condition.maxLength){
 					return { status : false, msg : `Number should be of maximum ${config.condition.maxLength} digits`};
 				}
-				if(config.condition.pattern && config.value.match(new RegExp(config.condition.pattern.pattern)) == null){
+				if(config.condition.pattern && config.value.match(new RegExp(config.condition.pattern.pattern)) === null){
 					return { status : false, msg : `Input number should ${config.condition.pattern.desc.toLowerCase()}`}
 				}
 				return { status : true };
 			case 'email':
-				if(config.condition.pattern && config.value.match(new RegExp(config.condition.pattern.pattern)) == null){
+				if(config.condition.pattern && config.value.match(new RegExp(config.condition.pattern.pattern)) === null){
 					return { status : false, msg : config.condition.pattern.desc.toLowerCase()}
 				}
 				return { status : true };
 			case 'date' :
-				if(!(new Date(config.value) != 'Invalid Date' && config.condition.pattern && config.value.match(new RegExp(config.condition.pattern.pattern)))){
+				if(!(new Date(config.value) !== 'Invalid Date' && config.condition.pattern && config.value.match(new RegExp(config.condition.pattern.pattern)))){
 					return { status : false, msg : config.condition.pattern.desc.toLowerCase()}
 				}
 				return { status : true };

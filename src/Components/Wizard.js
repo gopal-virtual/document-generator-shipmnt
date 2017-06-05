@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Wizard extends Component {
   render() {
     return (
-      <div>
+      <div className="hidden-print">
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
             <Progress data={{steps : Object.keys(this.props.data.data), currentStep : this.props.data.meta.currentStep}}></Progress>
