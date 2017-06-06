@@ -63,3 +63,12 @@ body {
   font-family: sans-serif;
   overflow : hidden;
 }
+.pointer {
+	cursor: pointer;
+}
+.truncate {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

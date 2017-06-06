@@ -79,6 +79,12 @@ function patchDoc(req, res) {
 
                   data.docs[reqData.id] = reqData.data;
 
+                  for(var i = 0, length = data.recentDocuments.length - 1; i<=length; i++){
+                    if(data.recentDocuments[i].id == reqData.id){
+                      data.recentDocuments[i].name = reqData.data.meta.name
+                    }
+                  }
+
                   data = JSON.stringify(data)
                
                   fs.writeFile('src/data/data.json', data, 'utf8', function(err) {

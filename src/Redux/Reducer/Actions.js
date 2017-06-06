@@ -68,10 +68,28 @@ export function updateDocument(widgetId, content) {
     content : content
   }
 }
+export const UPDATE_DOCUMENT_META = 'UPDATE_DOCUMENT_META'
+export function updateDocumentMeta(key, value) {
+  return {
+    type: UPDATE_DOCUMENT_META,
+    key: key,
+    value : value
+  }
+}
+
+export const DOCUMENT_PATCHING = 'DOCUMENT_PATCHING'
+export function patchingDocument() {
+  return {
+    type: DOCUMENT_PATCHING,
+    patching : true
+  }
+}
+
 export const DOCUMENT_PATCHED = 'DOCUMENT_PATCHED'
 export function documentPatched() {
   return {
-    type: DOCUMENT_PATCHED
+    type: DOCUMENT_PATCHED,
+    patching : false
   }
 }
 
@@ -110,6 +128,8 @@ export function fetchDocument(id) {
 export function patchDocument(id) {
 
   return function (dispatch) {
+    dispatch(patchingDocument())
+
     let doc = Store.getState().Document
     let settings = {
       "async": true,

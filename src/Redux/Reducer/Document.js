@@ -1,4 +1,4 @@
-import { RECEIVE_DOCUMENT, GO_BACK, GO_NEXT, UPDATE_DOCUMENT } from '../../Redux/Reducer/Actions'
+import { RECEIVE_DOCUMENT, GO_BACK, GO_NEXT, UPDATE_DOCUMENT, UPDATE_DOCUMENT_META } from '../../Redux/Reducer/Actions'
 
 const Document = (state = {}, action) => {
 	switch(action.type){
@@ -19,6 +19,10 @@ const Document = (state = {}, action) => {
 						value : action.content
 					})
 				})
+			});
+		case UPDATE_DOCUMENT_META:
+			return Object.assign({}, state, { 
+				meta : Object.assign({}, state.meta, {[action.key] : action.value})
 			});
 		default :
 			return Object.assign({}, state);

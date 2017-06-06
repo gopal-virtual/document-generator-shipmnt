@@ -11,20 +11,22 @@ class Preview extends Component {
           preview={this.props.preview}
           width={this.props.data.meta.width} 
           height={this.props.data.meta.height}
-          ></PrintDocument>
+        />
           
         <div className="hidden-print">
           <ActionHeader 
             onClick={this.props.onClick}
-            preview={this.props.preview}>
-            </ActionHeader>
+            preview={this.props.preview}
+            title={this.props.data.meta.name}
+            onDocumentNameChange={this.props.onDocumentNameChange}
+          />
           <Document 
             currentStep={this.props.data.meta.currentStep} 
             data={this.props.data.data}
             preview={this.props.preview}
             width={this.props.data.meta.width} 
             height={this.props.data.meta.height}
-            ></Document>
+          />
         </div>
       </div>
     );
@@ -41,22 +43,30 @@ class ActionHeader extends Component {
             : 'col-xs-8 col-sm-8 col-md-12 col-lg-12'
           }>
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-left">
-              <span onClick={this.props.onClick} className="fg-light-grey animation-fade-in">
-                <i className="glyphicon glyphicon-fullscreen"></i> Preview
+              <span onClick={this.props.onClick} className="fg-light-grey animation-fade-in pointer">
+                <i className={this.props.preview ? 'glyphicon glyphicon-chevron-right' : 'glyphicon glyphicon-chevron-left'}></i> Preview
               </span>
             </div>
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 center animation-fade-in">
-              <span className="fg-light-grey">Document Title</span>
+              <input 
+                ref={input => this.input = input}
+                type="text" 
+                className="document-title fg-light-grey bg-black" 
+                value={this.props.title}
+                onChange={()=>{this.props.onDocumentNameChange(this.input.value)}}
+                />
             </div>
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right animation-fade-in">
-              <button className="btn btn-default">Download</button>
+              <button type="button" className="btn btn-default btn-sm"><i className="glyphicon glyphicon-download-alt"></i> Download</button>
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
+  
+
 class Document extends Component {
   componentDidMount(){
     let padding = 25,

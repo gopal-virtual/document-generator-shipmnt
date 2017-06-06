@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import Wizard from '../Components/Wizard'
 import Preview from '../Components/Preview'
-import { goBack, goNext, updateDocument, patchDocument } from '../Redux/Reducer/Actions'
+import { goBack, goNext, updateDocument, updateDocumentMeta, patchDocument } from '../Redux/Reducer/Actions'
 import Store from '../Redux/App.store.js'
 import Validate from '../Components/Validate'
 
@@ -60,6 +60,9 @@ class Edit extends Component {
     Store.dispatch(goNext())
     this.save()
   }
+  onDocumentNameChange(value){
+    Store.dispatch(updateDocumentMeta('name', value))
+  }
   render() {
     const preview = this.state.data.Document.meta 
     ? !this.state.preview 
@@ -72,13 +75,17 @@ class Edit extends Component {
              back={this.goBack.bind(this)}
              next={this.goNext.bind(this)}
              update={this.update.bind(this)}
+             save={this.save.bind(this)}
+             saveStatus={this.state.data.Ui.patching}
              />
            </div>
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-5 bg-light-grey height-100">
              <Preview 
               preview={this.state.preview}
               data={this.state.data.Document} 
-              onClick={this.togglePreview.bind(this)}/>
+              onClick={this.togglePreview.bind(this)}
+              onDocumentNameChange={this.onDocumentNameChange.bind(this)}
+            />
            </div>
          </div>
        )

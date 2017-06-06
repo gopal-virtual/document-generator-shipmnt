@@ -26,7 +26,7 @@ class Home extends Component {
     const State = Store.getState()
     return (
       <div>
-        { !State.Document.meta 
+        { !State.Document.meta
           ? (
               <div className="container-fluid">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-blue height-100">
@@ -63,10 +63,10 @@ const DocumentList = (props) =>
           .map((doc)=>{
             return (
               <li key={doc.id} className="animation-fade-in-from-bottom">
-                <div className="document-title">{doc.name}</div>
+                <div className="document-title truncate">{doc.name}</div>
                 <div className="document-thumbnail fg-blue" onClick={()=>{ props.onClick(props.type, doc.id) }}>Edit</div>
               </li>
-            )    
+            )
           })
       }
     </ul>
