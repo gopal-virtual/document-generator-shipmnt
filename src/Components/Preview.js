@@ -5,26 +5,27 @@ class Preview extends Component {
   render() {
     return (
       <div>
-        <PrintDocument 
-          currentStep={this.props.data.meta.currentStep} 
+        <PrintDocument
+          currentStep={this.props.data.meta.currentStep}
           data={this.props.data.data}
           preview={this.props.preview}
-          width={this.props.data.meta.width} 
+          width={this.props.data.meta.width}
           height={this.props.data.meta.height}
         />
-          
+
         <div className="hidden-print">
-          <ActionHeader 
+          <ActionHeader
             onClick={this.props.onClick}
             preview={this.props.preview}
             title={this.props.data.meta.name}
             onDocumentNameChange={this.props.onDocumentNameChange}
+            download={this.props.download}
           />
-          <Document 
-            currentStep={this.props.data.meta.currentStep} 
+          <Document
+            currentStep={this.props.data.meta.currentStep}
             data={this.props.data.data}
             preview={this.props.preview}
-            width={this.props.data.meta.width} 
+            width={this.props.data.meta.width}
             height={this.props.data.meta.height}
           />
         </div>
@@ -48,16 +49,16 @@ class ActionHeader extends Component {
               </span>
             </div>
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 center animation-fade-in">
-              <input 
+              <input
                 ref={input => this.input = input}
-                type="text" 
-                className="document-title fg-light-grey bg-black" 
+                type="text"
+                className="document-title fg-light-grey bg-black"
                 value={this.props.title}
                 onChange={()=>{this.props.onDocumentNameChange(this.input.value)}}
                 />
             </div>
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right animation-fade-in">
-              <button type="button" className="btn btn-default btn-sm"><i className="glyphicon glyphicon-download-alt"></i> Download</button>
+              <button type="button" onClick={this.props.download} className="btn btn-default btn-sm"><i className="glyphicon glyphicon-download-alt"></i> Download</button>
             </div>
           </div>
         </div>
@@ -65,7 +66,7 @@ class ActionHeader extends Component {
     )
   }
 }
-  
+
 
 class Document extends Component {
   componentDidMount(){
@@ -93,7 +94,7 @@ class Document extends Component {
           }>
             <div className="document animation-fade-in">
               <Template
-                currentStep={this.props.currentStep} 
+                currentStep={this.props.currentStep}
                 data={this.props.data}
               ></Template>
             </div>

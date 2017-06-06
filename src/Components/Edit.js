@@ -5,6 +5,8 @@ import Preview from '../Components/Preview'
 import { goBack, goNext, updateDocument, updateDocumentMeta, patchDocument } from '../Redux/Reducer/Actions'
 import Store from '../Redux/App.store.js'
 import Validate from '../Components/Validate'
+import jsPDF from 'jspdf'
+import AddHtml from '../Lib/htmlToPdf'
 
 class Edit extends Component {
   constructor(){
@@ -16,6 +18,7 @@ class Edit extends Component {
         status : true
       }
     }
+    jsPDF.API.addHTML = AddHtml
   }
   componentDidMount(){
     this.unsubscribe = Store.subscribe(()=>{
@@ -35,6 +38,15 @@ class Edit extends Component {
   save(){
     Store.dispatch(patchDocument())
   }
+  download(){
+    let doc = new jsPDF()
+    doc.addHTML (
+      document.querySelector('.document'), 0, 0, false,
+      (dispose) => {
+        doc.save(`${this.state.data.Document.meta.name}.pdf`);
+      }
+    )
+  }
   update(id, widget, content){
     let state = Object.assign({}, this.state),
         validStatus = Validate.isValid({
@@ -45,7 +57,7 @@ class Edit extends Component {
         })
 
       state.data.Document.data[id].value = content
-      this.setState({ 
+      this.setState({
         data : state.data,
         valid : validStatus
       })
@@ -64,14 +76,14 @@ class Edit extends Component {
     Store.dispatch(updateDocumentMeta('name', value))
   }
   render() {
-    const preview = this.state.data.Document.meta 
-    ? !this.state.preview 
-    ? ( 
+    const preview = this.state.data.Document.meta
+    ? !this.state.preview
+    ? (
         <div className="row">
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-7 bg-blue height-100">
-             <Wizard 
+             <Wizard
              valid={this.state.valid}
-             document={this.state.data.Document} 
+             document={this.state.data.Document}
              back={this.goBack.bind(this)}
              next={this.goNext.bind(this)}
              update={this.update.bind(this)}
@@ -80,11 +92,12 @@ class Edit extends Component {
              />
            </div>
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-5 bg-light-grey height-100">
-             <Preview 
+             <Preview
               preview={this.state.preview}
-              data={this.state.data.Document} 
+              data={this.state.data.Document}
               onClick={this.togglePreview.bind(this)}
               onDocumentNameChange={this.onDocumentNameChange.bind(this)}
+              download={this.download.bind(this)}
             />
            </div>
          </div>
@@ -92,10 +105,12 @@ class Edit extends Component {
     : (
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-light-grey height-100">
-            <Preview 
+            <Preview
               preview={this.state.preview}
               data={this.state.data.Document}
-              onClick={this.togglePreview.bind(this)}/>
+              onClick={this.togglePreview.bind(this)}
+              download={this.download.bind(this)}
+              />
           </div>
         </div>
       )
