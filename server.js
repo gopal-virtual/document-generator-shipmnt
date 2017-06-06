@@ -12,6 +12,7 @@ app.get('/get/meta', getMeta)
 app.get('/get/doc', getDoc)
 app.patch('/patch/doc', patchDoc)
 app.post('/create/doc', createDoc)
+app.get('/edit/:id', Home)
 
 function Home (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -20,7 +21,7 @@ function Home (req, res) {
 function getMeta(req, res) {
     fs.readFile('src/data/data.json', 'utf8', function(err, data) {
         if (!err) {
-            data = { 
+            data = {
                 templateList : JSON.parse(data).templateList,
                 recentDocuments : JSON.parse(data).recentDocuments
             }
@@ -50,7 +51,7 @@ function getDoc(req, res) {
           }
           else{
             res.writeHead(404);
-            return res.end("Document not found")  
+            return res.end("Document not found")
           }
 
       } else {
@@ -59,7 +60,7 @@ function getDoc(req, res) {
           });
           return res.end("File read error" + err)
       }
-  });  
+  });
 }
 
 function patchDoc(req, res) {
@@ -86,7 +87,7 @@ function patchDoc(req, res) {
                   }
 
                   data = JSON.stringify(data)
-               
+
                   fs.writeFile('src/data/data.json', data, 'utf8', function(err) {
                       if (!err) {
                           res.writeHead(200, {
@@ -126,7 +127,9 @@ function createDoc(req, res) {
 
                   reqData = JSON.parse(reqData)
 
-                  var newDoc = data.docs[reqData.id],
+                  var newDoc = Object.assign({},data.docs[reqData.id], {
+                        meta : Object.assign({}, data.docs[reqData.id].meta)
+                      }),
                       id = new Date().valueOf()
                       newDoc.meta['id'] = id
 

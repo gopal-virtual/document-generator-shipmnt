@@ -23,6 +23,11 @@ class Edit extends Component {
         data : Store.getState()
       })
     })
+    window.onbeforeunload = (e) => {
+      var dialogText = 'Page reloading..';
+      e.returnValue = dialogText;
+      return dialogText;
+    };
   }
   componentWillUnmount(){
     this.unsubscribe()
@@ -45,7 +50,7 @@ class Edit extends Component {
         })
 
       state.data.Document.data[id].value = content
-      this.setState({ 
+      this.setState({
         data : state.data,
         valid : validStatus
       })
@@ -63,15 +68,18 @@ class Edit extends Component {
   onDocumentNameChange(value){
     Store.dispatch(updateDocumentMeta('name', value))
   }
+  download(){
+    window.print();
+  }
   render() {
-    const preview = this.state.data.Document.meta 
-    ? !this.state.preview 
-    ? ( 
+    const preview = this.state.data.Document.meta
+    ? !this.state.preview
+    ? (
         <div className="row">
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-7 bg-blue height-100">
-             <Wizard 
+             <Wizard
              valid={this.state.valid}
-             document={this.state.data.Document} 
+             document={this.state.data.Document}
              back={this.goBack.bind(this)}
              next={this.goNext.bind(this)}
              update={this.update.bind(this)}
@@ -80,11 +88,12 @@ class Edit extends Component {
              />
            </div>
            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-5 bg-light-grey height-100">
-             <Preview 
+             <Preview
               preview={this.state.preview}
-              data={this.state.data.Document} 
+              data={this.state.data.Document}
               onClick={this.togglePreview.bind(this)}
               onDocumentNameChange={this.onDocumentNameChange.bind(this)}
+              download={this.download.bind(this)}
             />
            </div>
          </div>
@@ -92,9 +101,10 @@ class Edit extends Component {
     : (
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-light-grey height-100">
-            <Preview 
+            <Preview
               preview={this.state.preview}
               data={this.state.data.Document}
+              download={this.download.bind(this)}
               onClick={this.togglePreview.bind(this)}/>
           </div>
         </div>

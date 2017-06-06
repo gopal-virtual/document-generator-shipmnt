@@ -21,7 +21,7 @@ const Document = (state = {}, action) => {
 				})
 			});
 		case UPDATE_DOCUMENT_META:
-			return Object.assign({}, state, { 
+			return Object.assign({}, state, {
 				meta : Object.assign({}, state.meta, {[action.key] : action.value})
 			});
 		default :
