@@ -14,13 +14,6 @@ export function goNext() {
   }
 }
 
-export const REQUEST_DOCUMENT_LIST = 'REQUEST_DOCUMENT_LIST'
-function requestDocumentList() {
-  return {
-    type: REQUEST_DOCUMENT_LIST
-  }
-}
-
 export const RECEIVE_DOCUMENT_LIST = 'RECEIVE_DOCUMENT_LIST'
 function receiveDocumentList(json) {
   return {
@@ -81,7 +74,7 @@ export function documentPatched() {
 
 export function fetchDocumentList() {
   return function (dispatch) {
-    dispatch(requestDocumentList())
+    dispatch(requestDocument())
     return Database.ref('/meta').once('value')
     .then(snap => {
       dispatch(receiveDocumentList(snap.val()))

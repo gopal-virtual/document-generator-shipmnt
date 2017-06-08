@@ -30,7 +30,9 @@ class Home extends Component {
           ? (
               <div className="container-fluid">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-blue height-100">
-                  <h5 className="text-center margin-tb-15 fg-light-blue"><strong>Select a document to start</strong></h5>
+                  <h5 className="text-center margin-tb-15 fg-light-blue"><strong>
+                    { State.Ui.requesting ? 'Loading...' : 'Select a document to start' }
+                  </strong></h5>
                   <div className="row">
                     <div className="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
                       {
