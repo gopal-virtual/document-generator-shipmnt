@@ -1,7 +1,11 @@
-import { DOCUMENT_PATCHING, DOCUMENT_PATCHED } from '../../Redux/Reducer/Actions'
+import { DOCUMENT_PATCHING, DOCUMENT_PATCHED, REQUEST_DOCUMENT, RECEIVE_DOCUMENT } from '../../Redux/Reducer/Actions'
 
-const Ui = (state = { patching : false }, action) => {
+const Ui = (state = { patching : false, requesting : false }, action) => {
 	switch(action.type){
+		case REQUEST_DOCUMENT :
+			return Object.assign({}, state, { requesting : true })
+		case RECEIVE_DOCUMENT :
+			return Object.assign({}, state, { requesting : false })
 		case DOCUMENT_PATCHING:
 			return Object.assign({}, state, { patching : action.patching });
 		case DOCUMENT_PATCHED:

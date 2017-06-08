@@ -8,6 +8,7 @@ class Preview extends Component {
         <PrintDocument
           currentStep={this.props.data.meta.currentStep}
           data={this.props.data.data}
+          template={this.props.data.template}
           preview={this.props.preview}
           width={this.props.data.meta.width}
           height={this.props.data.meta.height}
@@ -24,6 +25,7 @@ class Preview extends Component {
           <Document
             currentStep={this.props.data.meta.currentStep}
             data={this.props.data.data}
+            template={this.props.data.template}
             preview={this.props.preview}
             width={this.props.data.meta.width}
             height={this.props.data.meta.height}
@@ -70,13 +72,18 @@ class ActionHeader extends Component {
 
 class Document extends Component {
   componentDidMount(){
+    this.scale()
+    window.onresize = this.scale.bind(this)
+  }
+
+  scale(){
     let padding = 25,
-        scrollW = 10,
-        offset = padding * 2 + scrollW,
-        wrapper = document.querySelector('.document-wrapper'),
-        width = wrapper.offsetWidth,
-        elem = document.querySelector('.document'),
-        factor = ((width - offset) / this.props.width).toFixed(2)
+    scrollW = 10,
+    offset = padding * 2 + scrollW,
+    wrapper = document.querySelector('.document-wrapper'),
+    width = wrapper.offsetWidth,
+    elem = document.querySelector('.document'),
+    factor = ((width - offset) / this.props.width).toFixed(2)
 
     elem.style.width = `${this.props.width}px`
     elem.style.height = `${this.props.height}px`
@@ -96,6 +103,7 @@ class Document extends Component {
               <Template
                 currentStep={this.props.currentStep}
                 data={this.props.data}
+                template={this.props.template}
               ></Template>
             </div>
           </div>
@@ -111,6 +119,7 @@ class PrintDocument extends Component {
       <div className="print visible-print-block">
         <Template
           data={this.props.data}
+          template={this.props.template}
         ></Template>
       </div>
     );

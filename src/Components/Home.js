@@ -35,12 +35,12 @@ class Home extends Component {
                     <div className="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
                       {
                         State.Meta.recentDocuments &&
-                        <DocumentList type="Recent" list={State.Meta.recentDocuments} onClick={this.selectDocument} ></DocumentList>
+                        <DocumentList type="Recent" list={State.Meta.recentDocuments} onClick={this.selectDocument} requesting={State.Ui.requesting}></DocumentList>
                       }
                     </div>
                     <div className="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
                       { State.Meta.templateList &&
-                        <DocumentList type="Templates" list={State.Meta.templateList} onClick={this.selectDocument} ></DocumentList>
+                        <DocumentList type="Templates" list={State.Meta.templateList} onClick={this.selectDocument} requesting={State.Ui.requesting}></DocumentList>
                       }
                     </div>
                   </div>
@@ -54,22 +54,32 @@ class Home extends Component {
   }
 }
 
-const DocumentList = (props) =>
-  <div>
-    <ul className="document-list">
-      <lh className="fg-light-blue">{props.type}</lh>
-      {
-        props.list
-          .map((doc)=>{
-            return (
-              <li key={doc.id} className="animation-fade-in-from-bottom">
-                <div className="document-title truncate">{doc.name}</div>
-                <div className="document-thumbnail fg-blue" onClick={()=>{ props.onClick(props.type, doc.id) }}>Edit</div>
-              </li>
-            )
-          })
-      }
-    </ul>
-  </div>
+class DocumentList extends Component {
+  render(){
+    return (
+      <div>
+        <ul className="document-list">
+          <lh className="fg-light-blue">{this.props.type}</lh>
+          {
+            Object.keys(this.props.list)
+            .map((key)=>{
+              return (
+                <li key={key} className="animation-fade-in-from-bottom">
+                <div className="document-title truncate">{this.props.list[key].name}</div>
+                <div className="document-thumbnail fg-blue" onClick={()=>{
+                  this.selected = this.props.list[key].id
+                  this.props.onClick(this.props.type, this.props.list[key].id)
+                }}>{
+                  this.selected === this.props.list[key].id && this.props.requesting ? 'Loading...' : 'Edit'
+                }</div>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
+    )
+  }
+}
 
 export default Home;

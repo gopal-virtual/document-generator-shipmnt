@@ -5,7 +5,7 @@ const Wizard = (props) =>
     <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
         <Progress
-          percent={~~((props.document.meta.currentStep/Object.keys(props.document.data).length) * 100)}
+          percent={~~(((props.document.meta.currentStep + 1)/Object.keys(props.document.data).length) * 100)}
           steps={Object.keys(props.document.data).length}
           currentStep={props.document.meta.currentStep}/>
         <Modal
@@ -26,7 +26,7 @@ const Progress = (props) =>
     <div className="progress-number">
       <div className="progress" style={{width: '100%'}}>
         <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow={props.percent} aria-valuemin="0" aria-valuemax="100" style={{minWidth : `${props.percent}%`}}>
-          <strong>{props.currentStep} / {props.steps}</strong>
+          <strong>{props.currentStep + 1} / {props.steps}</strong>
         </div>
       </div>
     </div>

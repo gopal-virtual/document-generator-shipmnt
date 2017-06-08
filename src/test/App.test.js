@@ -2,8 +2,9 @@ import expect from 'expect'
 import Document from '../Redux/Reducer/Document'
 import Validate from '../Components/Validate'
 import deepFreeze from 'deep-freeze'
+import TemplateGenerator from '../Components/TemplateGenerator'
 
-describe('Document reducer test', function() {
+describe('App test', function() {
     describe('Wizard Navigation', function() {
         it('should go next', function() {
             const beforeState = { meta: { currentStep: 2 }, data: { 1: {}, 2: {}, 3: {} } },
@@ -53,15 +54,35 @@ describe('Document reducer test', function() {
         it('should update document', function() {
             const oldValue = "abcd",
                 newValue = "efgh",
-                beforeState = { meta: { currentStep: 2 }, data: { 1: {}, 2: {}, 3: { value: oldValue } } },
-                afterState = { meta: { currentStep: 2 }, data: { 1: {}, 2: {}, 3: { value: newValue } } };
+                beforeState = { meta: { currentStep: 2 }, data: [ {}, {}, { value: oldValue } ] },
+                afterState = { meta: { currentStep: 2 }, data: [ {}, {}, { value: newValue } ] };
+
+            deepFreeze(beforeState)
+            expect(Document(beforeState, { type: 'UPDATE_DOCUMENT', widgetId: 2, content: newValue })).toEqual(afterState)
+        })
+        it('should return previous document state', function() {
+            const oldValue = "abcd",
+                newValue = "efgh",
+                beforeState = { meta: { currentStep: 2 }, data: [ {}, {}, { value: oldValue } ] },
+                afterState = { meta: { currentStep: 2 }, data: [ {}, {}, { value: oldValue } ] };
 
             deepFreeze(beforeState)
             expect(Document(beforeState, { type: 'UPDATE_DOCUMENT', widgetId: 3, content: newValue })).toEqual(afterState)
         })
     })
 
+    describe('Document fetch, update', function() {
+      it('should return previous document state', function() {
+        const beforeState = {},
+        afterState = { meta: { currentStep: 2 , id : 1}, data: [ {}, {}, { value: 'oldValue' } ] };
+
+        deepFreeze(beforeState)
+        expect(Document(beforeState, { type: 'RECEIVE_DOCUMENT', data: afterState, id : 1 })).toEqual(afterState)
+      })
+    })
+
     describe('Validate', function() {
+
         describe('Text Input', function() {
             it('should be valid, value length in the range', function() {
                 const input = { type: 'text', value: 'abcdabcd', condition: { minLength: 5, maxLength: 10 } },
@@ -112,6 +133,8 @@ describe('Document reducer test', function() {
                 expect(Validate.isValid(input)).toEqual(output)
             });
         })
+
+
         describe('Number Input', function() {
             const pattern = '[9|8|7]\\d{9}'
             const desc = 'should start with 9, 8 or 7 and a total digit of 10'
@@ -143,6 +166,8 @@ describe('Document reducer test', function() {
                 expect(Validate.isValid(input)).toEqual(output)
             });
         })
+
+
         describe('Email Input', function() {
             const pattern = "^[a-z0-9\\.]+@[a-z0-9\\.-]+\\.[a-z]{2,}$"
             const desc = "valid characters : a to z, 0 to 9 and only . - can be used"
@@ -165,6 +190,8 @@ describe('Document reducer test', function() {
                 expect(Validate.isValid(input)).toEqual(output)
             });
         })
+
+
         describe('Date Input', function() {
             const pattern = "^[0-9]{2}-[0-9]{2}-[0-9]{4}$"
             const desc = "invalid date"
@@ -179,7 +206,47 @@ describe('Document reducer test', function() {
                       output = { status: false , msg : desc}
                   deepFreeze(input)
                   expect(Validate.isValid(input)).toEqual(output)
-              });  
+              });
         })
     })
+
+    describe('Template Converter', function() {
+        it('should convert pseudo html to html string', function() {
+            const pseudoHtml = `<div><h1>[[0]]</h1><p>[[1]]</p><h3>[[2]]</h3><p>[[3]]</p></div>`,
+                data = [ { value : 'Heading 1'}, { value : 'Description 1'}, { value : 'Heading 2'}, { value : 'Description 2'} ],
+                output = `<div><h1>Heading 1</h1><p>Description 1</p><h3>Heading 2</h3><p>Description 2</p></div>`
+
+            deepFreeze(pseudoHtml)
+            deepFreeze(data)
+            expect(TemplateGenerator.toHtmlString(data, pseudoHtml)).toEqual(output)
+        })
+
+        it('should convert pseudo html to html string, with inproper psedohtml', function() {
+          const pseudoHtml = `<div><h1>[[0]]</h1></div>`,
+          data = [ { value : 'Heading 1'}, { value : 'Description 1'}, { value : 'Heading 2'}, { value : 'Description 2'} ],
+          output = `<div><h1>Heading 1</h1></div>`
+
+          deepFreeze(pseudoHtml)
+          deepFreeze(data)
+          expect(TemplateGenerator.toHtmlString(data, pseudoHtml)).toEqual(output)
+        })
+
+        it('should convert pseudo html to html string, with inproper data', function() {
+          const pseudoHtml = `<div><h1>[[0]]</h1><p>[[1]]</p><h3>[[2]]</h3><p>[[3]]</p></div>`,
+          data = [ { value : 'Heading 1'}, { value : 'Description 2'} ],
+          output = `<div><h1>Heading 1</h1><p>Description 2</p><h3>[[2]]</h3><p>[[3]]</p></div>`
+
+          deepFreeze(pseudoHtml)
+          deepFreeze(data)
+          expect(TemplateGenerator.toHtmlString(data, pseudoHtml)).toEqual(output)
+        })
+
+        it('should convert pseudo html to html string, with undefined inputs', function() {
+          const pseudoHtml = undefined,
+          data = undefined,
+          output = null
+          expect(TemplateGenerator.toHtmlString(data, pseudoHtml)).toEqual(output)
+        })
+    })
+
 })

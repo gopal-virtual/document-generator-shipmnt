@@ -1,6 +1,5 @@
-import fetch from 'isomorphic-fetch'
+import Database from '../../Database'
 import Store from '../App.store'
-import $ from 'jquery'
 
 export const GO_BACK = 'GO_BACK'
 export function goBack() {
@@ -12,21 +11,6 @@ export const GO_NEXT = 'GO_NEXT'
 export function goNext() {
   return {
     type: GO_NEXT
-  }
-}
-export const SELECT_DOCUMENT = 'SELECT_DOCUMENT'
-export function selectDocument(documentID) {
-  return {
-    type: SELECT_DOCUMENT,
-    documentID
-  }
-}
-
-export const SELECT_TEMPLATE = 'SELECT_TEMPLATE'
-export function selectTemplate(templateID) {
-  return {
-    type: SELECT_TEMPLATE,
-    templateID
   }
 }
 
@@ -56,7 +40,8 @@ export const RECEIVE_DOCUMENT = 'RECEIVE_DOCUMENT'
 function receiveDocument(json, id) {
   return {
     type: RECEIVE_DOCUMENT,
-    data: json
+    data: json,
+    id : id
   }
 }
 
@@ -95,17 +80,12 @@ export function documentPatched() {
 
 
 export function fetchDocumentList() {
-
   return function (dispatch) {
-
     dispatch(requestDocumentList())
-
-    return fetch('http://localhost:9000/get/meta')
-      .then(response => response.json())
-      .then(json =>
-        dispatch(receiveDocumentList(json))
-      )
-      .catch(error => console.log(error))
+    return Database.ref('/meta').once('value')
+    .then(snap => {
+      dispatch(receiveDocumentList(snap.val()))
+    }, (error) => console.log(error))
   }
 }
 
@@ -114,69 +94,45 @@ export function fetchDocument(id) {
   return function (dispatch) {
 
     dispatch(requestDocument())
-
-    return fetch(`http://localhost:9000/get/doc?id=${id}`)
-      .then(response => response.json())
-      .then(json => {
-          dispatch(receiveDocument(json))
-        }
-      )
-      .catch(error => console.log(error))
+    return Database.ref(`/docs/${id}`).once('value')
+    .then(snap => {
+      dispatch(receiveDocument(snap.val(), id))
+    }, (error) => console.log(error))
   }
 }
 
-export function patchDocument(id) {
+export function patchDocument() {
 
   return function (dispatch) {
-    dispatch(patchingDocument())
-
     let doc = Store.getState().Document
-    let settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": "http://localhost:9000/patch/doc",
-      "method": "PATCH",
-      "headers": {
-        "content-type": "application/json",
-      },
-      "processData": false,
-      "data": JSON.stringify({
-        id : doc.meta.id,
-        data : doc
-      })
-    }
-
-    $.ajax(settings)
-    .done(function (response) {
-      dispatch(documentPatched(response))
+    dispatch(patchingDocument())
+    return Database.ref(`/docs/${doc.meta.id}`).set({
+      data : doc.data,
+      meta : doc.meta,
+      template : doc.template
     })
-    .fail(function(status) {
-        console.log(status)
+    .then(()=>{
+      return Database.ref(`/meta/recentDocuments/${doc.meta.id}`).set({ id : doc.meta.id, name : doc.meta.name })
     })
+    .then(()=>{ dispatch(documentPatched())})
   }
 }
 
 export function createDocument(id) {
-
   return function (dispatch) {
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": "http://localhost:9000/create/doc",
-      "method": "POST",
-      "headers": {
-        "content-type": "application/json",
-      },
-      "processData": false,
-      "data": JSON.stringify({ id : id })
-    }
+    dispatch(requestDocument())
+    return Database.ref(`/docs/${id}`).once('value')
+    .then(snap => {
+        const doc = snap.val(),
+              newRef = Database.ref(`/docs/`).push()
 
-    $.ajax(settings)
-    .done(function (response) {
-      dispatch(receiveDocument(response))
-    })
-    .fail(function(status) {
-        console.log(status)
-    })
+        newRef.set({
+          data : doc.data,
+          meta : Object.assign({}, doc.meta, { id : newRef.key }),
+          template : doc.template
+        }).then(()=>{
+          return Database.ref(`/meta/recentDocuments/${newRef.key}`).set({ id : newRef.key, name : doc.meta.name })
+        }).then(()=>dispatch(receiveDocument(doc, newRef.key)))
+    },  (error) => console.log(error))
   }
 }
